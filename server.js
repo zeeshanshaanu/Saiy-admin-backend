@@ -2,7 +2,9 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors';
 import DBconnection from './config/dbConnection.js';
-import userRoutes from "./routes/auth/Auth-routes.js"
+import userRoutes from "./routes/auth/Auth-routes.js";
+import investorsRoutes from "./routes/Investors/Investors-route.js";
+
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
 dotenv.config();
@@ -38,6 +40,8 @@ DBconnection(DATABASE_URL)
 
 // Load Routes
 app.use("/api/user", userRoutes);
+app.use("/api/investor", investorsRoutes);
+
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
