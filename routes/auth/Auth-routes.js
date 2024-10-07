@@ -4,6 +4,7 @@ import {
     loggedUser,
     logoutUser,
     sendUserPasswordResetEmail,
+    uploadProfile,
     UserLogin,
     userPasswordReset,
     UserRegistration
@@ -15,8 +16,8 @@ import checkUserAuth from '../../middleware/authMiddleware.js';
 const router = express.Router();
 
 // Middleware check routes
-router.use('/changepassword', checkUserAuth);
-router.use('/loggeduser', checkUserAuth);
+// router.use('/changepassword', checkUserAuth);
+// router.use('/loggeduser', checkUserAuth);
 
 // Public routes
 router.post("/register", upload.single('image'), UserRegistration);
@@ -26,8 +27,10 @@ router.post('/forgot-password', sendUserPasswordResetEmail);
 router.post('/reset-password/:id/:token', userPasswordReset);
 
 // protected routes
-router.post('/changepassword', changeUserPassword);
-router.get('/loggeduser', loggedUser);
+router.post('/changepassword', checkUserAuth, changeUserPassword);
+router.get('/loggeduser', checkUserAuth, loggedUser);
+router.put('/update-user-profile', checkUserAuth, upload.single('image'), uploadProfile);
+
 
 ////////////////////////  **************************  /////////////////////////////
 export default router;

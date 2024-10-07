@@ -216,3 +216,69 @@ export const userPasswordReset = async (req, res) => {
         res.send({ status: 'failed', message: 'Invalid Token' });
     }
 };
+
+// Update Profile
+
+export const uploadProfile = async (req, res) => {
+
+    try {
+        const { name, phone, address, recoveryEmail, fa } = req.body;
+        // Check if the user exists
+        const user = await UserModel.findById(req.user._id);
+        if (!user) {
+            return res.status(404).send({
+                status: 'failed',
+                message: 'User not found',
+            });
+        }
+
+        // Handle image upload if an image is provided
+        let imageUrl = user.image; // Keep existing image by default
+        if (req.file) {
+            const b64 = Buffer.from(req.file.buffer).toString("base64");
+            const Url = `data:${req.file.mimetype};base64,${b64}`;
+            const uploadResult = await imageUploadUtil(Url);
+            imageUrl = uploadResult.secure_url; // Update with new image URL if uploaded
+        }
+
+        // Update the user's profile fields
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            req.user._id,
+            {
+                $set: {
+                    name: name || user.name,
+                    // email: email || user.email,
+                    phone: phone || user.phone,
+                    address: address || user.address,
+                    recoveryEmail: recoveryEmail || user.recoveryEmail,
+                    fa: fa !== undefined ? fa : user.fa, // If two-factor auth is provided, update it
+                    image: imageUrl,
+                },
+            },
+            { new: true } // Return the updated document
+        );
+
+        res.status(200).send({
+            status: 'success',
+            message: 'Profile updated successfully',
+            user: updatedUser,
+        });
+
+
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).send({
+            status: 'failed',
+            message: 'Profile update failed',
+        });
+    }
+
+}
+
+
+
+
+
+
+

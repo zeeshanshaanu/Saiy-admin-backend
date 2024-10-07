@@ -16,7 +16,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS Policy
-app.use(cors());
+// app.use(cors());
+
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST", "DELETE", "PUT"],
+        allowedHeaders: [
+            "Content-Type",
+            "Authorization",
+            "Cache-Control",
+            "Expires",
+            "Pragma",
+        ],
+        credentials: true,
+    })
+);
 
 // DB-Connection
 DBconnection(DATABASE_URL)
