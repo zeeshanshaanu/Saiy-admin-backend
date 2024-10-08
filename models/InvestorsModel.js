@@ -2,10 +2,9 @@ import mongoose from "mongoose";
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
 const DocumentSchema = new mongoose.Schema({
-    fileName: { type: String, }, // Name of the file (e.g., "contract.pdf")
-    fileType: { type: String, }, // Type of the file (e.g., "PDF", "DOC")
-    fileUrl: { type: String, }, // URL or path to the uploaded document
-    dateOfCreation: { type: Date, default: Date.now }, // Automatically set to the current date
+    fileName: { type: String, },
+    fileUrl: { type: String, },
+    dateOfCreation: { type: Date, default: Date.now },
 });
 
 const RecentActivitySchema = new mongoose.Schema({
@@ -18,7 +17,7 @@ const RecentActivitySchema = new mongoose.Schema({
 const TransactionSchema = new mongoose.Schema({
     transactionId: { type: String, required: true },
     amount: { type: Number, required: true },
-    type: { type: String, required: true }, // e.g., "Credit" or "Debit"
+    type: { type: String, required: true },
     date: { type: Date, default: Date.now },
     invoice: { type: String }
 });

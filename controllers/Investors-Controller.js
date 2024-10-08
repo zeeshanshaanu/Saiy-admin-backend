@@ -1,5 +1,5 @@
 
-import { imageUploadUtil } from '../helpers/ImageUpload-cloudinary.js';
+import { documentUploadUtil, imageUploadUtil } from '../helpers/ImageUpload-cloudinary.js';
 import Investor from "../models/InvestorsModel.js"
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
@@ -12,12 +12,43 @@ export const uploadInvestorImage = async (req, res) => {
             const Url = `data:${req.file.mimetype};base64,${b64}`;
             const uploadResult = await imageUploadUtil(Url);
 
-            res.status(200).send({ imageUrl: uploadResult.secure_url });
+            res.status(200).send({
+                status: 'success',
+                message: "image upload successfully.!",
+                imageUrl: uploadResult.secure_url
+            });
         } else {
             res.status(400).send({ message: "No image provided" });
         }
     } catch (error) {
         res.status(500).send({ message: "Error uploading image", error });
+    }
+};
+
+export const uploadInvestorDocument = async (req, res) => {
+    try {
+        if (req.files && req.files.length > 0) {
+            const documentUrls = [];
+
+            for (const file of req.files) {
+                const uploadResult = await documentUploadUtil(file.buffer, file.originalname); // Use file.buffer and file.originalname
+
+                documentUrls.push(uploadResult.secure_url); // Store each uploaded document's URL
+            }
+            res.status(200).send({
+                status: 'success',
+                message: "Documents uploaded successfully!",
+                documentUrls, // Return the array of document URLs
+            });
+        } else {
+            res.status(400).send({ message: "No documents provided" });
+        }
+    } catch (error) {
+        res.status(500).send({
+            status: 'failed',
+            message: "Error uploading documents",
+            error
+        });
     }
 };
 
@@ -38,13 +69,13 @@ export const CreateInvestor = async (req, res) => {
         const investor = new Investor({
             name: req.body.name,
             email: req.body.email,
-            status: req.body.status,
+            status: req.body.status || "pending",
             iban: req.body.iban,
             phone: req.body.phone,
             address: req.body.address,
             image: req.body.image,
             // 
-            documents: documentList,  // Arrays parsed directly from JSON
+            documents: documentList,
             recentActivities: recentActivities,
             transactionHistory: transactionHistory
         });
