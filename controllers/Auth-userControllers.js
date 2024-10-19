@@ -240,33 +240,26 @@ export const uploadProfile = async (req, res) => {
             const uploadResult = await imageUploadUtil(Url);
             imageUrl = uploadResult.secure_url; // Update with new image URL if uploaded
         }
-
-        // Update the user's profile fields
         const updatedUser = await UserModel.findByIdAndUpdate(
             req.user._id,
             {
                 $set: {
                     name: name || user.name,
-                    // email: email || user.email,
                     phone: phone || user.phone,
                     address: address || user.address,
                     recoveryEmail: recoveryEmail || user.recoveryEmail,
-                    fa: fa !== undefined ? fa : user.fa, // If two-factor auth is provided, update it
+                    fa: fa !== undefined ? fa : user.fa,
                     image: imageUrl,
                 },
             },
-            { new: true } // Return the updated document
+            { new: true }
         );
-
         res.status(200).send({
             status: 'success',
             message: 'Profile updated successfully',
             user: updatedUser,
         });
-
-
     } catch (error) {
-
         console.log(error);
         res.status(500).send({
             status: 'failed',

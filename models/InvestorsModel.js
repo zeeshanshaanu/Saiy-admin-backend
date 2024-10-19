@@ -31,8 +31,8 @@ const investorSchema = new mongoose.Schema({
     address: { type: String, },
     image: { type: String },
     documents: [DocumentSchema],
-    recentActivities: [RecentActivitySchema],
-    transactionHistory: [TransactionSchema]
+    // recentActivities: [RecentActivitySchema],
+    // transactionHistory: [TransactionSchema]
 });
 
 const InvestorModel = mongoose.model('Investor', investorSchema);
