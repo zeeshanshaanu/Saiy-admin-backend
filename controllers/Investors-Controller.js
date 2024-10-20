@@ -90,7 +90,6 @@ export const CreateInvestor = async (req, res) => {
     }));
     console.log("documentUrls--->>>>", documentUrls);
 
-
     try {
         const investor = new Investor({
             name: req.body.name,
@@ -121,10 +120,9 @@ export const CreateInvestor = async (req, res) => {
 
 // Get-Investors
 export const GetInvestors = async (req, res) => {
-    const { id } = req.params; // Get the ID from the request parameters
+    const { id } = req.params;
     try {
         if (id) {
-            // If ID is provided, fetch the specific investor
             const investor = await Investor.findById(id);
             if (!investor) {
                 return res.status(404).send({
@@ -137,7 +135,6 @@ export const GetInvestors = async (req, res) => {
                 data: investor
             });
         } else {
-            // If no ID is provided, fetch all investors
             const investors = await Investor.find({});
             return res.status(200).send({
                 status: 'success',
@@ -157,11 +154,9 @@ export const GetInvestors = async (req, res) => {
 // Update-Investor
 export const UpdateInvestor = async (req, res) => {
     const { id } = req.params;
-    const { email, documents } = req.body;
-
     try {
-        // Check if the investor exists
         const existingInvestor = await Investor.findById(id);
+
         if (!existingInvestor) {
             return res.status(404).send({
                 status: 'failed',
@@ -169,41 +164,37 @@ export const UpdateInvestor = async (req, res) => {
             });
         }
 
-        if (email && email !== existingInvestor.email) {
-            const emailExists = await Investor.findOne({ email });
-            if (emailExists) {
-                return res.status(400).send({
-                    status: 'failed',
-                    message: 'Email already exists',
-                });
-            }
-        }
-
-        let imageUrl = existingInvestor.image;
-        if (req.file) {
-            const b64 = Buffer.from(req.file.buffer).toString("base64");
-            const Url = `data:${req.file.mimetype};base64,${b64}`;
+        let imageUrl = existingInvestor?.image;
+        if (req?.files?.image && req.files?.image?.length > 0) {
+            const image = req?.files?.image[0];
+            const b64 = Buffer.from(image?.buffer).toString("base64");
+            const Url = `data:${image?.mimetype};base64,${b64}`;
             const uploadResult = await imageUploadUtil(Url);
-            imageUrl = uploadResult.secure_url; // Update with new image URL if uploaded
+            imageUrl = uploadResult?.secure_url;
         }
-        const documentList = documents?.map(doc => ({
-            fileName: doc.fileName,
-            fileType: doc.fileType,
-            fileUrl: doc.fileUrl
-        })) || existingInvestor.documents;
-
+        // 
+        let documentList = existingInvestor.documents;
+        if (req.files?.documents) {
+            documentList = req.files.documents.map(doc => ({
+                fileName: doc?.fileName,
+                fileType: doc?.mimetype,
+                fileUrl: doc?.fileUrl
+            }));
+        }
         // Update investor fields
         const updatedInvestor = await Investor.findByIdAndUpdate(
             id,
             {
-                name: req.body.name || existingInvestor.name,
-                email: req.body.email || existingInvestor.email,
-                status: req.body.status || existingInvestor.status,
-                iban: req.body.iban || existingInvestor.iban,
-                phone: req.body.phone || existingInvestor.phone,
-                address: req.body.address || existingInvestor.address,
-                image: imageUrl,
-                documents: documentList,
+                $set: {
+                    name: req.body.name || existingInvestor.name,
+                    email: req.body.email || existingInvestor.email,
+                    status: req.body.status || existingInvestor.status,
+                    iban: req.body.iban || existingInvestor.iban,
+                    phone: req.body.phone || existingInvestor.phone,
+                    address: req.body.address || existingInvestor.address,
+                    image: imageUrl,
+                    documents: documentList,
+                }
             },
             { new: true }
         );
@@ -213,12 +204,13 @@ export const UpdateInvestor = async (req, res) => {
             message: 'Investor updated successfully',
             investor: updatedInvestor,
         });
+
     } catch (error) {
         console.error('Error updating investor:', error);
         res.status(500).send({
             status: 'failed',
             message: 'Error updating investor',
-            error,
+            error: error.message,
         });
     }
 };
@@ -233,6 +225,7 @@ export const DeleteInvestor = async (req, res) => {
                 message: 'Investor ID is required',
             });
         }
+
         // Find and delete the investor by ID
         const investor = await Investor.findByIdAndDelete(id);
 
@@ -246,6 +239,7 @@ export const DeleteInvestor = async (req, res) => {
             status: 'success',
             message: 'Investor deleted successfully',
         });
+
     } catch (error) {
         console.error('Error deleting investor:', error);
         return res.status(500).send({

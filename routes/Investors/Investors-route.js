@@ -18,12 +18,13 @@ const router = express.Router();
 // protected routes
 router.post('/upload-image', checkUserAuth, upload.single('image'), uploadInvestorImage);
 router.post('/upload-document', upload.array('documents'), uploadInvestorDocument);
+
 router.post(
     '',
     checkUserAuth,
     upload.fields([
-        { name: 'image', maxCount: 1 }, // Single image
-        { name: 'documents', maxCount: 3 } // Multiple documents, with a max count
+        { name: 'image', maxCount: 1 },
+        { name: 'documents', maxCount: 3 }
     ]),
     CreateInvestor
 );
@@ -31,16 +32,14 @@ router.put(
     '/:id',
     checkUserAuth,
     upload.fields([
-        { name: 'image', maxCount: 1 }, // Single image
-        { name: 'documents', maxCount: 3 } // Multiple documents, with a max count
+        { name: 'image', maxCount: 1 },
+        { name: 'documents', maxCount: 3 }
     ]),
     UpdateInvestor
 );
-// router.put('/:id', checkUserAuth, UpdateInvestor);
 router.get('/:id?', checkUserAuth, GetInvestors);
 router.delete('/:id', checkUserAuth, DeleteInvestor);
 
-// router.put('/update-user-profile', checkUserAuth, upload.single('image'), uploadProfile);
 
 
 

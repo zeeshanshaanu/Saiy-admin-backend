@@ -4,6 +4,7 @@ import cors from 'cors';
 import DBconnection from './config/dbConnection.js';
 import userRoutes from "./routes/auth/Auth-routes.js";
 import investorsRoutes from "./routes/Investors/Investors-route.js";
+import portfolioRoutes from "./routes/portfolios/Portfolios-route.js";
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
@@ -41,6 +42,7 @@ DBconnection(DATABASE_URL)
 // Load Routes
 app.use("/api/user", userRoutes);
 app.use("/api/investor", investorsRoutes);
+app.use("/api/portfolio", portfolioRoutes);
 
 
 ////////////////////////  **************************  /////////////////////////////
