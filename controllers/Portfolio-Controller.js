@@ -47,8 +47,11 @@ export const GetPortfolois = async (req, res) => {
                     message: 'portfolio not found'
                 });
             }
-        }
-        else {
+            return res.status(200).send({
+                status: 'success',
+                data: portfolio
+            });
+        } else {
             const portfolio = await Portfolio.find({});
             return res.status(200).send({
                 status: 'success',
