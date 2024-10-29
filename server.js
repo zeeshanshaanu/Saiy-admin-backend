@@ -23,8 +23,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS Policy
-// app.use(cors());
-
 app.use(
     cors({
         origin: [
@@ -41,6 +39,7 @@ app.use(
         credentials: true,
     })
 );
+
 // DB-Connection
 DBconnection(DATABASE_URL)
 
