@@ -31,7 +31,7 @@ export const CreateAssociate = async (req, res) => {
             image: imageUrl,
             name: req.body.name,
             email: req.body.email,
-            level: req.body.level || 'pending',
+            level: req.body.level,
             earn: req.body.earn,
             paid_out: req.body.paid_out,
             investors: investorsArray,

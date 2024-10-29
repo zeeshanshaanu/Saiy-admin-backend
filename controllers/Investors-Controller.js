@@ -88,7 +88,7 @@ export const CreateInvestor = async (req, res) => {
         fileUrl: url,
         dateOfCreation: new Date()
     }));
-    
+
     // console.log("documentUrls--->>>>", documentUrls);
 
     try {
@@ -96,6 +96,7 @@ export const CreateInvestor = async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             status: req.body.status || "pending",
+            level: req.body.level || "invesor",
             iban: req.body.iban,
             phone: req.body.phone,
             address: req.body.address,

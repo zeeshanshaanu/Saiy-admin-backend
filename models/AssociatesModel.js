@@ -19,6 +19,7 @@ const AssociateSchema = new mongoose.Schema({
     earn: { type: String },
     paid_out: { type: String },
     image: { type: String },
+    creationOn: { type: Date, default: Date.now },
     investors: [InvestorsSchema]
 });
 

@@ -12,11 +12,13 @@ const InvestorsSchema = new mongoose.Schema({
 });
 
 const portfolioSchema = new mongoose.Schema({
+    image: { type: String },
     name: { type: String, required: true },
     min_investment: { type: Number },
     max_investment: { type: Number },
     investors: [InvestorsSchema],
     withdrawal_Period: { type: String },
+    creationOn: { type: Date, default: Date.now },
 });
 
 const PortfolioModel = mongoose.model('Portfolios', portfolioSchema);

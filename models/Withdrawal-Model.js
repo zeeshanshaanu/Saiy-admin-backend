@@ -8,6 +8,7 @@ const WithdrawalSchema = new mongoose.Schema({
     withdrawal_amount: { type: Number },
     withdrawal_status: { type: String },
     Request_date: { type: Date, default: Date.now },
+    creationOn: { type: Date, default: Date.now },
     // Request_date: { type: String },
     KYC_status: { type: String },
 })

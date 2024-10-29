@@ -1,34 +1,49 @@
-import { imageUploadUtil } from "../helpers/ImageUpload-cloudinary.js";
+import { documentUploadUtil } from "../helpers/ImageUpload-cloudinary.js";
 import NotificationModel from "../models/Notification-Model.js";
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
 
 // create
 export const CreateNotification = async (req, res) => {
-    const { email } = req.body;
-    const existingNotification = await NotificationModel.findOne({ email });
+    const { subject, content } = req.body;
+    const existingNotification = await NotificationModel.findOne({ subject });
 
     if (existingNotification) {
-        return res.send({ status: "failed", message: 'Email already exists' })
+        return res.send({ status: "failed", message: 'subject already exists' })
+    }
+    const documentFiles = req.files['documents'] || [];
+
+    const documentUrls = [];
+    if (documentFiles.length > 0) {
+        for (const file of documentFiles) {
+            const uploadResult = await documentUploadUtil(file.buffer, file.originalname);
+            documentUrls.push(uploadResult.secure_url);
+        }
     }
 
-    let imageUrl = "";
-    if (req.file) {
-        const b64 = Buffer.from(req.file.buffer).toString("base64");
-        const Url = `data:${req.file.mimetype};base64,${b64}`;
-        const uploadResult = await imageUploadUtil(Url);
-        imageUrl = uploadResult.secure_url; // Get the URL of the uploaded image
-    }
+    const extractFileName = (url) => {
+        const fullFileName = url.split('/').pop();
+        return fullFileName.split('.')[1];
+    };
+    const documents = documentUrls.map(url => ({
+        fileName: extractFileName(url),
+        fileUrl: url,
+        dateOfCreation: new Date()
+    }));
 
+    const { portfolio } = req.body;
+    let portfolioObj = {};
+
+    if (portfolio) {
+        portfolioObj = JSON?.parse(portfolio);
+    }
+    
     try {
         const NewNotification = new NotificationModel({
-            image: imageUrl,
-            name: req.body.name,
-            email: req.body.email,
-            Notification_amount: req.body.Notification_amount,
-            Notification_status: req.body.Notification_status,
-            Request_date: req.body.Request_date,
-            KYC_status: req.body.KYC_status,
+            portfolio: portfolioObj,
+            subject: subject,
+            content: content,
+            documents: documents,
         })
         await NewNotification.save();
         res.status(201).send({

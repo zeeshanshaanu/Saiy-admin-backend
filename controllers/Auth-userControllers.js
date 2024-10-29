@@ -21,7 +21,7 @@ export const handleImageUpload = async (req, res) => {
 
 // User-Registration
 export const UserRegistration = async (req, res) => {
-    const { name, email, password, confirm_password, phone, address, recoveryEmail, fa, status } = req.body;
+    const { name, email, password, confirm_password, phone, address, recoveryEmail, fa, level } = req.body;
     const user = await UserModel.findOne({ email: email });
     if (user) {
         res.send({ status: 'failed', message: 'Email already exists' });
@@ -48,7 +48,7 @@ export const UserRegistration = async (req, res) => {
                         password: hashPassword,
                         phone: phone,
                         address: address,
-                        status: status,
+                        level: level,
                         fa: fa,
                     });
                     await NewUser.save();

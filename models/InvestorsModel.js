@@ -10,11 +10,13 @@ const DocumentSchema = new mongoose.Schema({
 const investorSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    status: { type: String, default: 'Active' },
+    status: { type: String },
+    level: { type: String },
     iban: { type: String },
     phone: { type: String, },
     address: { type: String, },
     image: { type: String },
+    creationOn: { type: Date, default: Date.now },
     documents: [DocumentSchema],
 
 });

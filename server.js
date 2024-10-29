@@ -7,6 +7,8 @@ import investorsRoutes from "./routes/Investors/Investors-route.js";
 import portfolioRoutes from "./routes/portfolios/Portfolios-route.js";
 import AssociateRoutes from "./routes/Associates/Associate-route.js";
 import WithdrawalRoutes from "./routes/Withdrawals/Withdrawals-route.js";
+import NotificationRoutes from "./routes/Notifications/Notifications-route.js";
+import ActivityLogs from "./routes/Activity&Logs/ActivityLogs-route.js";
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
@@ -47,6 +49,8 @@ app.use("/api/investor", investorsRoutes);
 app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/Associate", AssociateRoutes);
 app.use("/api/Withdrawal", WithdrawalRoutes);
+app.use("/api/notification", NotificationRoutes);
+app.use("/api/entities", ActivityLogs);
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////

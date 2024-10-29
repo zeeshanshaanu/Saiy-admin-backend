@@ -6,14 +6,23 @@ import {
     GetPortfolois,
     UpdatePortfolio
 } from '../../controllers/Portfolio-Controller.js';
+import { upload } from '../../helpers/ImageUpload-cloudinary.js';
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
 const router = express.Router();
 
-router.post('', checkUserAuth, CreatePortofolio);
+router.post('', checkUserAuth,
+    upload.fields([
+        { name: 'image', maxCount: 1 },
+    ]),
+    CreatePortofolio);
+
+router.put('/:id', checkUserAuth, upload.fields([
+    { name: 'image', maxCount: 1 },
+]), UpdatePortfolio);
+
 router.get('/:id?', checkUserAuth, GetPortfolois)
-router.put('/:id', checkUserAuth, UpdatePortfolio)
 router.delete('/:id', checkUserAuth, DeletePortfolio);
 
 ////////////////////////  **************************  /////////////////////////////
