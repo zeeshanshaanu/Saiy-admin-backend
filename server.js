@@ -23,33 +23,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS Policy
-// app.use(cors());
+app.use(cors());
 
-// app.use(
-//     cors({
-//         origin: [
-//             "http://localhost:3000",
-//             "https://spiffy-starburst-71ba6b.netlify.app"
-//         ],
-//         methods: ["GET", "POST", "DELETE", "PUT"],
-//         allowedHeaders: [
-//             "Content-Type",
-//             "Authorization",
-//             "Cache-Control",
-//             "Expires",
-//             "Pragma",
-//         ],
-//         credentials: true,
-//     })
-// );
-app.use(cors({
-    origin: "*", // Change this to a specific origin array in production
-    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Cache-Control", "Expires", "Pragma"],
-    credentials: true
-}));
+app.use(
+    cors({
+        origin: [
+            "http://localhost:3000",
+            "https://spiffy-starburst-71ba6b.netlify.app"
+        ],
+        methods: ["GET", "POST", "DELETE", "PUT"],
+        allowedHeaders: [
+            "Content-Type",
+            "Authorization",
+            "Cache-Control",
+            "Expires",
+            "Pragma",
+        ],
+        credentials: true,
+    })
+);
 
-// DB-Connection
+
 DBconnection(DATABASE_URL)
 
 // Load Routes
