@@ -21,11 +21,7 @@ export const handleImageUpload = async (req, res) => {
 
 // User-Registration
 export const UserRegistration = async (req, res) => {
-<<<<<<< HEAD
-    const { name, email, password, confirm_password, phone, address, recoveryEmail, fa } = req.body;
-=======
     const { name, email, password, confirm_password, phone, address, recoveryEmail, fa, level } = req.body;
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
     const user = await UserModel.findOne({ email: email });
     if (user) {
         res.send({ status: 'failed', message: 'Email already exists' });
@@ -45,16 +41,6 @@ export const UserRegistration = async (req, res) => {
                         imageUrl = uploadResult.secure_url; // Get the URL of the uploaded image
                     }
                     const NewUser = new UserModel({
-<<<<<<< HEAD
-                        name: name,
-                        email: email,
-                        password: hashPassword,
-                        phone: phone,
-                        address: address,
-                        recoveryEmail: recoveryEmail,
-                        fa: fa,
-                        image: imageUrl
-=======
                         image: imageUrl,
                         name: name,
                         email: email,
@@ -64,7 +50,6 @@ export const UserRegistration = async (req, res) => {
                         address: address,
                         level: level,
                         fa: fa,
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
                     });
                     await NewUser.save();
                     const saved_user = await UserModel.findOne({ email: email });
@@ -98,8 +83,6 @@ export const UserRegistration = async (req, res) => {
     }
 }
 
-<<<<<<< HEAD
-=======
 // get
 export const GetRegistredUsers = async (req, res) => {
     const { id } = req.params;
@@ -175,7 +158,6 @@ export const DeleteUser = async (req, res) => {
     }
 }
 
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 // Login-User
 export const UserLogin = async (req, res) => {
     try {
@@ -191,10 +173,6 @@ export const UserLogin = async (req, res) => {
                         process.env.JWT_SECRET_KEY,
                         { expiresIn: '5d' }
                     );
-<<<<<<< HEAD
-=======
-
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
                     res.send({ status: 'success', message: 'Login Successfully.!', token, user });
                 } else {
                     res.send({ status: 'failed', message: 'Email or Password is not valid' });
@@ -316,18 +294,10 @@ export const userPasswordReset = async (req, res) => {
 };
 
 // Update Profile
-<<<<<<< HEAD
-
-=======
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 export const uploadProfile = async (req, res) => {
 
     try {
         const { name, phone, address, recoveryEmail, fa } = req.body;
-<<<<<<< HEAD
-        // Check if the user exists
-=======
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
         const user = await UserModel.findById(req.user._id);
         if (!user) {
             return res.status(404).send({

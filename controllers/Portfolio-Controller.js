@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import { imageUploadUtil } from "../helpers/ImageUpload-cloudinary.js";
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 import Portfolio from "../models/PortfoliosModel.js"
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
@@ -14,11 +11,6 @@ export const CreatePortofolio = async (req, res) => {
     if (existingportfolio) {
         return res.send({ status: "failed", message: 'Name already exists' })
     }
-<<<<<<< HEAD
-
-    try {
-        const NewPortfolio = new Portfolio({
-=======
     const imageFile = req.files['image'] ? req.files['image'][0] : null;
 
     let imageUrl = ""
@@ -38,16 +30,11 @@ export const CreatePortofolio = async (req, res) => {
     try {
         const NewPortfolio = new Portfolio({
             image: imageUrl,
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
             name: req.body.name,
             min_investment: req.body.min_investment,
             max_investment: req.body.max_investment,
             withdrawal_Period: req.body.withdrawal_Period,
-<<<<<<< HEAD
-            investors: req.body.investors,
-=======
             investors: investorsArray,
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
         })
 
         await NewPortfolio.save();
@@ -110,8 +97,6 @@ export const UpdatePortfolio = async (req, res) => {
                 message: 'Portfolio not found'
             });
         }
-<<<<<<< HEAD
-=======
 
         let imageUrl = portfolio?.image;
         if (req?.files?.image && req.files?.image?.length > 0) {
@@ -127,7 +112,6 @@ export const UpdatePortfolio = async (req, res) => {
         if (investors) {
             investorsArray = JSON.parse(investors);
         }
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
         const updatedportfolio = await Portfolio.findByIdAndUpdate(
             id, {
             $set: {
@@ -135,17 +119,10 @@ export const UpdatePortfolio = async (req, res) => {
                 min_investment: req.body.min_investment || portfolio?.min_investment,
                 max_investment: req.body.max_investment || portfolio?.max_investment,
                 withdrawal_Period: req.body.withdrawal_Period || portfolio?.withdrawal_Period,
-<<<<<<< HEAD
-                investors: req.body.investors || portfolio?.investors,
-            }
-        }, { new: true }
-        );
-=======
                 investors: investorsArray || portfolio?.investors,
                 image: imageUrl,
             }
         }, { new: true });
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
         res.status(200).send({
             status: 'success',
             message: 'Portfolio updated successfully',

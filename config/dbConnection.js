@@ -11,8 +11,4 @@ const DBconnection = async (DATABASE_URL) => {
         console.log(error)
     }
 }
-<<<<<<< HEAD
 export default DBconnection
-=======
-export default DBconnection
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa

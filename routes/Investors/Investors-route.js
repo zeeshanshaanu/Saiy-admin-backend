@@ -28,10 +28,6 @@ router.post(
     ]),
     CreateInvestor
 );
-<<<<<<< HEAD
-=======
-
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 router.put(
     '/:id',
     checkUserAuth,
@@ -41,10 +37,6 @@ router.put(
     ]),
     UpdateInvestor
 );
-<<<<<<< HEAD
-=======
-
->>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 router.get('/:id?', checkUserAuth, GetInvestors);
 router.delete('/:id', checkUserAuth, DeleteInvestor);
 
