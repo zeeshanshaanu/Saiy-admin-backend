@@ -21,7 +21,11 @@ export const handleImageUpload = async (req, res) => {
 
 // User-Registration
 export const UserRegistration = async (req, res) => {
+<<<<<<< HEAD
     const { name, email, password, confirm_password, phone, address, recoveryEmail, fa } = req.body;
+=======
+    const { name, email, password, confirm_password, phone, address, recoveryEmail, fa, level } = req.body;
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
     const user = await UserModel.findOne({ email: email });
     if (user) {
         res.send({ status: 'failed', message: 'Email already exists' });
@@ -41,6 +45,7 @@ export const UserRegistration = async (req, res) => {
                         imageUrl = uploadResult.secure_url; // Get the URL of the uploaded image
                     }
                     const NewUser = new UserModel({
+<<<<<<< HEAD
                         name: name,
                         email: email,
                         password: hashPassword,
@@ -49,6 +54,17 @@ export const UserRegistration = async (req, res) => {
                         recoveryEmail: recoveryEmail,
                         fa: fa,
                         image: imageUrl
+=======
+                        image: imageUrl,
+                        name: name,
+                        email: email,
+                        recoveryEmail: recoveryEmail,
+                        password: hashPassword,
+                        phone: phone,
+                        address: address,
+                        level: level,
+                        fa: fa,
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
                     });
                     await NewUser.save();
                     const saved_user = await UserModel.findOne({ email: email });
@@ -82,6 +98,84 @@ export const UserRegistration = async (req, res) => {
     }
 }
 
+<<<<<<< HEAD
+=======
+// get
+export const GetRegistredUsers = async (req, res) => {
+    const { id } = req.params;
+    try {
+        if (id) {
+            const User = await UserModel.findById(id);
+            if (!User) {
+                return res.status(404).send({
+                    status: 'failed',
+                    message: 'User not found'
+                });
+            }
+            return res.status(200).send({
+                status: 'success',
+                data: User
+            });
+        } else {
+            const User = await UserModel.find({});
+            return res.status(200).send({
+                status: 'success',
+                data: User
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching Users:', error);
+        return res.status(500).send({
+            status: 'failed',
+            message: 'Error fetching User',
+            error
+        });
+    }
+}
+
+// delete
+export const DeleteUser = async (req, res) => {
+    const { id } = req.params;
+    // const loggedInUserId = req.user._id;
+
+    try {
+        if (!id) {
+            return res.status(400).send({
+                status: 'error',
+                message: 'User ID is required',
+            });
+        }
+
+        // if (id === loggedInUserId.toString()) {
+        //     return res.status(403).send({
+        //         status: 'error',
+        //         message: 'You cannot delete your own account',
+        //     });
+        // }
+
+        const User = await UserModel.findByIdAndDelete(id);
+        if (!User) {
+            return res.status(404).send({
+                status: 'error',
+                message: 'User not found',
+            });
+        }
+        return res.status(200).send({
+            status: 'success',
+            message: 'User deleted successfully',
+        });
+
+    } catch (error) {
+        console.error('Error deleting User:', error);
+        return res.status(500).send({
+            status: 'error',
+            message: 'Error deleting User',
+            error: error.message,
+        });
+    }
+}
+
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 // Login-User
 export const UserLogin = async (req, res) => {
     try {
@@ -97,6 +191,10 @@ export const UserLogin = async (req, res) => {
                         process.env.JWT_SECRET_KEY,
                         { expiresIn: '5d' }
                     );
+<<<<<<< HEAD
+=======
+
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
                     res.send({ status: 'success', message: 'Login Successfully.!', token, user });
                 } else {
                     res.send({ status: 'failed', message: 'Email or Password is not valid' });
@@ -218,12 +316,18 @@ export const userPasswordReset = async (req, res) => {
 };
 
 // Update Profile
+<<<<<<< HEAD
 
+=======
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 export const uploadProfile = async (req, res) => {
 
     try {
         const { name, phone, address, recoveryEmail, fa } = req.body;
+<<<<<<< HEAD
         // Check if the user exists
+=======
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
         const user = await UserModel.findById(req.user._id);
         if (!user) {
             return res.status(404).send({

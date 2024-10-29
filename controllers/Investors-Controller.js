@@ -88,13 +88,22 @@ export const CreateInvestor = async (req, res) => {
         fileUrl: url,
         dateOfCreation: new Date()
     }));
+<<<<<<< HEAD
     console.log("documentUrls--->>>>", documentUrls);
+=======
+
+    // console.log("documentUrls--->>>>", documentUrls);
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 
     try {
         const investor = new Investor({
             name: req.body.name,
             email: req.body.email,
             status: req.body.status || "pending",
+<<<<<<< HEAD
+=======
+            level: req.body.level || "invesor",
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
             iban: req.body.iban,
             phone: req.body.phone,
             address: req.body.address,
@@ -156,7 +165,10 @@ export const UpdateInvestor = async (req, res) => {
     const { id } = req.params;
     try {
         const existingInvestor = await Investor.findById(id);
+<<<<<<< HEAD
 
+=======
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
         if (!existingInvestor) {
             return res.status(404).send({
                 status: 'failed',

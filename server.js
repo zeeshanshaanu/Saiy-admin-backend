@@ -5,6 +5,13 @@ import DBconnection from './config/dbConnection.js';
 import userRoutes from "./routes/auth/Auth-routes.js";
 import investorsRoutes from "./routes/Investors/Investors-route.js";
 import portfolioRoutes from "./routes/portfolios/Portfolios-route.js";
+<<<<<<< HEAD
+=======
+import AssociateRoutes from "./routes/Associates/Associate-route.js";
+import WithdrawalRoutes from "./routes/Withdrawals/Withdrawals-route.js";
+import NotificationRoutes from "./routes/Notifications/Notifications-route.js";
+import ActivityLogs from "./routes/Activity&Logs/ActivityLogs-route.js";
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
@@ -43,7 +50,14 @@ DBconnection(DATABASE_URL)
 app.use("/api/user", userRoutes);
 app.use("/api/investor", investorsRoutes);
 app.use("/api/portfolio", portfolioRoutes);
+<<<<<<< HEAD
 
+=======
+app.use("/api/Associate", AssociateRoutes);
+app.use("/api/Withdrawal", WithdrawalRoutes);
+app.use("/api/notification", NotificationRoutes);
+app.use("/api/entities", ActivityLogs);
+>>>>>>> a52f732fc4de94ae5f65aff28d668999b3436caa
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
