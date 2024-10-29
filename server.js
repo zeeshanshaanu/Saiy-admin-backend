@@ -23,14 +23,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS Policy
-app.use(cors());
+// app.use(cors());
 
 app.use(
     cors({
         origin: [
             "http://localhost:3000",
-            "https://spiffy-starburst-71ba6b.netlify.app"
-        ],
+            "https://spiffy-starburst-71ba6b.netlify.app"],
         methods: ["GET", "POST", "DELETE", "PUT"],
         allowedHeaders: [
             "Content-Type",
@@ -42,8 +41,7 @@ app.use(
         credentials: true,
     })
 );
-
-
+// DB-Connection
 DBconnection(DATABASE_URL)
 
 // Load Routes
@@ -54,10 +52,6 @@ app.use("/api/Associate", AssociateRoutes);
 app.use("/api/Withdrawal", WithdrawalRoutes);
 app.use("/api/notification", NotificationRoutes);
 app.use("/api/entities", ActivityLogs);
-
-app.use((req, res) => {
-    res.status(404).json({ message: "API route not found" });
-});
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
