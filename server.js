@@ -23,17 +23,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CORS Policy
-app.use(
-    cors({
-        origin: true,
-        credentials: true,
-        exposedHeaders: ["Content-Length", "Bearer"],
-    })
-);
+// app.use(
+//     cors({
+//         origin: [
+//             "http://localhost:3000",
+//             "https://spiffy-starburst-71ba6b.netlify.app"],
+//         allowedHeaders: [
+//             "Content-Type",
+//             "Authorization",
+//             "Cache-Control",
+//             "Expires",
+//             "Pragma",
+//         ],
+//         credentials: true,
+//     })
+// );
 
 app.use(
     cors({
         origin: true,
+        credentials: true,
         exposedHeaders: ["Content-Length", "Bearer"],
     })
 );
