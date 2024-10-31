@@ -37,7 +37,7 @@ router.put(
     ]),
     UpdateInvestor
 );
-router.get('/:id?', checkUserAuth, GetInvestors);
+router.get('/:id?', GetInvestors);
 router.delete('/:id', checkUserAuth, DeleteInvestor);
 
 
