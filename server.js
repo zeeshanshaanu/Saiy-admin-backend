@@ -63,6 +63,7 @@ app.get('/', (req, res) => {
     res.json({
         "path": "Home",
         "firstname ": "zeeshan",
+        "lastname ": "zahoor updated",
         "lastname ": "zahoor",
 
     })

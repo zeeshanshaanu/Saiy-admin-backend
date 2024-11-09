@@ -1,5 +1,4 @@
 import express from 'express';
-
 import { upload } from '../../helpers/ImageUpload-cloudinary.js';
 import checkUserAuth from '../../middleware/authMiddleware.js';
 import {
@@ -12,8 +11,6 @@ import {
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
 const router = express.Router();
-
-
 
 // protected routes
 router.post('/upload-image', checkUserAuth, upload.single('image'), uploadInvestorImage);
@@ -28,6 +25,7 @@ router.post(
     ]),
     CreateInvestor
 );
+
 router.put(
     '/:id',
     checkUserAuth,
@@ -37,10 +35,9 @@ router.put(
     ]),
     UpdateInvestor
 );
+
 router.get('/:id?', GetInvestors);
 router.delete('/:id', checkUserAuth, DeleteInvestor);
-
-
 
 
 ////////////////////////  **************************  /////////////////////////////
