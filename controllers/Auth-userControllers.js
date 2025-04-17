@@ -206,7 +206,11 @@ export const UserLogin = async (req, res) => {
     console.error("Login Error:", error);
     res
       .status(500)
-      .send({ status: "failed", message: "Unable to Login", error: error });
+      .send({
+        status: "failed",
+        message: "Unable to Login",
+        error: error?.message,
+      });
   }
 };
 
