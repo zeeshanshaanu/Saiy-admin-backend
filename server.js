@@ -1,7 +1,7 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import DBconnection from "./config/dbConnection.js";
+import express from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors';
+import DBconnection from './config/dbConnection.js';
 import userRoutes from "./routes/auth/Auth-routes.js";
 import investorsRoutes from "./routes/Investors/Investors-route.js";
 import portfolioRoutes from "./routes/portfolios/Portfolios-route.js";
@@ -24,32 +24,31 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS Policy
 app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "https://spiffy-starburst-71ba6b.netlify.app",
-    ],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Cache-Control",
-      "Expires",
-      "Pragma",
-    ],
-    credentials: true,
-  })
+    cors({
+        origin: [
+            "http://localhost:3000",
+            "https://spiffy-starburst-71ba6b.netlify.app"],
+        allowedHeaders: [
+            "Content-Type",
+            "Authorization",
+            "Cache-Control",
+            "Expires",
+            "Pragma",
+        ],
+        credentials: true,
+    })
 );
 
 app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-    exposedHeaders: ["Content-Length", "Bearer"],
-  })
+    cors({
+        origin: true,
+        credentials: true,
+        exposedHeaders: ["Content-Length", "Bearer"],
+    })
 );
 
 // DB-Connection
-DBconnection(DATABASE_URL);
+DBconnection(DATABASE_URL)
 
 // Load Routes
 app.use("/api/user", userRoutes);
@@ -60,17 +59,19 @@ app.use("/api/Withdrawal", WithdrawalRoutes);
 app.use("/api/notification", NotificationRoutes);
 app.use("/api/entities", ActivityLogs);
 
-app.get("/", (req, res) => {
-  res.json({
-    path: "Home",
-    "firstname ": "zeeshan",
-    "lastname ": "zahoor updated",
-    "lastname ": "zahoor",
-  });
-});
+app.get('/', (req, res) => {
+    res.json({
+        "path": "Home",
+        "firstname ": "zeeshan",
+        "lastname ": "zahoor updated",
+        "lastname ": "zahoor",
+
+    })
+})
+
 
 ////////////////////////  **************************  /////////////////////////////
 ////////////////////////  **************************  /////////////////////////////
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost/:${port}`);
-});
+    console.log(`Server listening at http://localhost/:${port}`)
+})
